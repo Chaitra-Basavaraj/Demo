@@ -4,10 +4,26 @@ pipeline{
         maven "test-maven"
     }
     stages{
-        stage("Chaitra"){
+       stage('GetCode'){
             steps{
-                echo "hello chaitra"
+                git 'https://github.com/ravdy/javaloginapp.git'
             }
+         }        
+       stage('Build'){
+            steps{
+                sh 'mvn clean package'
+            }
+         }
+        stage('SonarQube analysis') {
+//    def scannerHome = tool 'SonarScanner 4.0';
+        steps{
+        withSonarQubeEnv('sonarqube-8.9') { 
+        // If you have configured more than one global server connection, you can specify its name
+//      sh "${scannerHome}/bin/sonar-scanner"
+        sh "mvn sonar:sonar"
+    }
         }
+        }
+       
     }
 }

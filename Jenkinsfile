@@ -6,7 +6,7 @@ pipeline{
     stages{
        stage('GetCode'){
             steps{
-                git ''
+                git 'https://github.com/Chaitra-Basavaraj/Demo.git'
             }
          }        
        stage('Build'){
